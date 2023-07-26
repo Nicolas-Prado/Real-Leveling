@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  height: 100%;
+}
+
 body {
   margin: 0px;
   position: absolute;
@@ -9,6 +13,6 @@ body {
   height: 100%;
 
   color: #ffffff;
-  background: url("/background.gif") no-repeat;
-  background-size: cover;
+  background: url("/fullbg.gif") no-repeat;
+  background-size: 100% 100%;
 }
