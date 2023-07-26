@@ -7,6 +7,8 @@ export default function StyledBorder({
     borderSize,
     isUrl,
     borderRadius,
+    xHole,
+    yHole,
     children
 }: {
     bg: string,
@@ -14,6 +16,8 @@ export default function StyledBorder({
     borderSize: string,
     isUrl: string,
     borderRadius: string,
+    yHole: string,
+    xHole: string,
     children: React.ReactNode
 }){
 
@@ -22,6 +26,8 @@ export default function StyledBorder({
         "--border": `${border}`,
         "--border-size": `${borderSize}`,
         "--is-url": `"${isUrl}"`,
-        "--border-radius": `${borderRadius}`
+        "--border-radius": `${borderRadius}`,
+        "--x-hole": `${xHole}`,
+        "--y-hole": `${yHole}`
     } as CSSProperties}>{children}</div>
 }

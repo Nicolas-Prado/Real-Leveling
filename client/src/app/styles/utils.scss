@@ -1,4 +1,4 @@
-@mixin better-border($bg, $border, $border-size: 1px, $is-url: false) {
+@mixin better-border($bg, $border, $border-size: 1px, $is-url: false, $x-hole: 60%, $y-hole: 60%) {
     position: relative;
 
     border: $border;
@@ -24,11 +24,11 @@
 
     &::before{
         left: 50%;
-        top: calc(0px - $border-size);
+        top: calc(-1px - $border-size);
         transform: translateX(-50%);
 
-        width: 40%;
-        height: calc(100% + calc(2 * $border-size));
+        width: $y-hole;
+        height: calc(calc(100% + calc(2 * $border-size)) + 2px);
 
     }
 
@@ -38,7 +38,7 @@
         transform: translateY(-50%);
 
         width: calc(calc(100% + calc(2 * $border-size)) + 2px);
-        height: 30%;
+        height: $x-hole;
     }
 }
 

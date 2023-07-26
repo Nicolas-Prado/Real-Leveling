@@ -4,16 +4,32 @@
     @include utils.centered-div;
 }
 
-.styled-border {
-    @include utils.better-border('/fullbg.gif', 1px solid white, 1px, true);
-    border-radius: 15px;
-}
+//.uncompressed, .compressed
 
-.uncompressed, .compressed{
-    background-color: red;
-    z-index: 99;
+.compressed{
+    width: 25px;
+    height: 25px;
+
+    & * {
+        opacity: 0;
+    }
 }
 
 .uncompressed{
-    background-color: green;
+    //& * {
+    //    opacity: 0;
+    //}
+    //animation: uncompressing 1s normal 1 forwards;
+    width: 700px;
+    height: 400px;
+    transition: all 0.2s;
+}
+
+@keyframes uncompressing {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
 }

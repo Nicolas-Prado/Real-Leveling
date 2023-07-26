@@ -22,7 +22,7 @@ export default function CharSlots(){
     }, [])
 
     return <div className={styles['centered-div']}>
-        <StyledBorder bg='url("/fullbg.gif")' border="1px solid white" borderSize="3px" borderRadius="15px" isUrl="true">
+        <StyledBorder bg='url("/fullbg.gif")' border="1px solid white" borderSize="3px" borderRadius="10px" isUrl="true" xHole="35%" yHole="50%">
             <div className={userId!==null ? styles.uncompressed : styles.compressed}>
                 {typeof userId === "number"
                     ? charsId?.map(charId => <CharSlot key={charId} userId={userId} charId={charId} />)
