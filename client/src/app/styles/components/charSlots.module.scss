@@ -1,0 +1,19 @@
+@use '../utils.scss';
+
+.centered-div {
+    @include utils.centered-div;
+}
+
+.styled-border {
+    @include utils.better-border('/fullbg.gif', 1px solid white, 1px, true);
+    border-radius: 15px;
+}
+
+.uncompressed, .compressed{
+    background-color: red;
+    z-index: 99;
+}
+
+.uncompressed{
+    background-color: green;
+}

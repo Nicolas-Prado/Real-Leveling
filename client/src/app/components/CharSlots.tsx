@@ -1,8 +1,9 @@
 "use client"
 import { useEffect, useState } from "react"
 import CharSlot from "./CharSlot"
-import styles from "./styles/charSlots.module.scss"
+import styles from "./../styles/components/charSlots.module.scss"
 import Link from "next/link"
+import StyledBorder from "./StyledBorder"
 
 export default function CharSlots(){
     const [userId, setUserId] = useState<number|null>(null)
@@ -20,11 +21,15 @@ export default function CharSlots(){
         }
     }, [])
 
-    return <div className={userId!==null ? styles.uncompressed : styles.compressed}>
-        {typeof userId === "number"
-            ? charsId?.map(charId => <CharSlot key={charId} userId={userId} charId={charId} />)
-            : ""
-        }
-        <Link href={"/register"}><button>New Char</button></Link>
+    return <div className={styles['centered-div']}>
+        <StyledBorder bg='url("/fullbg.gif")' border="1px solid white" borderSize="3px" borderRadius="15px" isUrl="true">
+            <div className={userId!==null ? styles.uncompressed : styles.compressed}>
+                {typeof userId === "number"
+                    ? charsId?.map(charId => <CharSlot key={charId} userId={userId} charId={charId} />)
+                    : ""
+                }
+                <Link href={"/register"}><button>New Char</button></Link>
+            </div>
+        </StyledBorder>
     </div>
 }
