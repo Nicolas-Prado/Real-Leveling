@@ -1,0 +1,35 @@
+@use '../utils.scss';
+
+.centered-div {
+    @include utils.centered-div;
+}
+
+//.uncompressed, .compressed
+
+.compressed{
+    width: 25px;
+    height: 25px;
+
+    & * {
+        opacity: 0;
+    }
+}
+
+.uncompressed{
+    //& * {
+    //    opacity: 0;
+    //}
+    //animation: uncompressing 1s normal 1 forwards;
+    width: 700px;
+    height: 400px;
+    transition: all 0.2s;
+}
+
+@keyframes uncompressing {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

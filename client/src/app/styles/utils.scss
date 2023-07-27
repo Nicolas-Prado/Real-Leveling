@@ -1,0 +1,50 @@
+@mixin better-border($bg, $border, $border-size: 1px, $is-url: false, $x-hole: 60%, $y-hole: 60%) {
+    position: relative;
+
+    border: $border;
+    border-width: $border-size;
+
+    padding: 5px;
+
+    z-index: -2;
+
+    &::after, &::before {
+        content: '';
+        position: absolute;
+
+        z-index: -1;
+
+        @if $is-url {
+            background: $bg no-repeat;
+            background-size: 100% 100%;
+        } @else {
+            background-color: $bg;
+        }
+    }
+
+    &::before{
+        left: 50%;
+        top: calc(-1px - $border-size);
+        transform: translateX(-50%);
+
+        width: $y-hole;
+        height: calc(calc(100% + calc(2 * $border-size)) + 2px);
+
+    }
+
+    &::after{
+        left: calc(-1px - $border-size);
+        top: 50%;
+        transform: translateY(-50%);
+
+        width: calc(calc(100% + calc(2 * $border-size)) + 2px);
+        height: $x-hole;
+    }
+}
+
+@mixin centered-div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

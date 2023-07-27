@@ -1,0 +1,6 @@
+@use '../utils.scss';
+
+.styled-border {
+    @include utils.better-border(var(--bg), var(--border), var(--border-size), var(--is-url), var(--x-hole), var(--y-hole));
+    border-radius: var(--border-radius);
+}
