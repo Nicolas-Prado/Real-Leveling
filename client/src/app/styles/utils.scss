@@ -6,17 +6,18 @@
 
     padding: 5px;
 
-    z-index: -2;
+    z-index: -3;
 
     &::after, &::before {
         content: '';
         position: absolute;
 
-        z-index: -1;
+        z-index: -2;
 
         @if $is-url {
-            background: $bg no-repeat;
-            background-size: 100% 100%;
+            background: $bg no-repeat fixed;
+            background-size: 100vw 100vh;
+            background-position: center;
         } @else {
             background-color: $bg;
         }
@@ -26,6 +27,8 @@
         left: 50%;
         top: calc(-1px - $border-size);
         transform: translateX(-50%);
+
+        z-index: -1;
 
         width: $y-hole;
         height: calc(calc(100% + calc(2 * $border-size)) + 2px);

@@ -1,3 +1,5 @@
+import styles from "./../styles/components/charSlot.module.scss"
+
 export default function CharSlot({
     userId,
     charId
@@ -5,5 +7,9 @@ export default function CharSlot({
     userId: number,
     charId: number
 }){
-    return <h1>User: {userId} Char: {charId}</h1>   
+    return (
+        <div className={styles['char-slot']}>
+            <h1>User: {userId} Char: {charId}</h1>
+        </div>
+    )
 }
