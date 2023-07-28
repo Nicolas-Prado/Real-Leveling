@@ -4,7 +4,7 @@ export default function CharSlot({
     userId,
     charId
 }: {
-    userId: number,
+    userId: string,
     charId: number
 }){
     return (
