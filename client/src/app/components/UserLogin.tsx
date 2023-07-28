@@ -6,7 +6,7 @@ export default function UserLogin(){
     const [isNew, setIsNew] = useState(false);
 
     const userMutation = useMutation({
-        mutationFn: (newUser) => {
+        mutationFn: (newUser: { [k:string]: FormDataEntryValue }) => {
             return fetch('./../api', {
                 method: "POST",
                 body: JSON.stringify(newUser),
@@ -17,8 +17,18 @@ export default function UserLogin(){
         }
     })
 
+    function handleSubmit(event: React.FormEvent<EventTarget>) {
+        event.preventDefault()
+
+        const formData = new FormData(event.target as HTMLFormElement)
+
+        const formJson = Object.fromEntries(formData.entries())
+
+        userMutation.mutate(formJson)
+    }
+
     return (
-        <form action="" className={styles['user-form']}>
+        <form onSubmit={handleSubmit} className={styles['user-form']}>
             <div>
                 <label htmlFor="username">Username </label>  
                 <input type="text" name="username" id="username" />
