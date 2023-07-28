@@ -1,10 +1,19 @@
 .char-slot{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
     border: 1px solid white;
     border-radius: 5px;
 
-    padding: 5px;
-
-    margin-bottom: 10px;
-
+    width: 100%;
     height: 20%;
+
+    cursor: pointer;
+
+    transition: all 0.2s;
+}
+
+.char-slot:hover{
+    transform: scale(1.01);
 }

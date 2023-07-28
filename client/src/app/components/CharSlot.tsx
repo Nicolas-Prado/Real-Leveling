@@ -9,7 +9,8 @@ export default function CharSlot({
 }){
     return (
         <div className={styles['char-slot']}>
-            <h1>User: {userId} Char: {charId}</h1>
+            <h1>Username, Title</h1>
+            <h2>Level</h2>
         </div>
     )
 }

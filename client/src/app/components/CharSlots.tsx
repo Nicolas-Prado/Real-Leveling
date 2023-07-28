@@ -10,12 +10,10 @@ export default function CharSlots(){
 
     useEffect(() => {
         if (typeof window !== "undefined"){
-            const userId = localStorage.getItem("userId");
+            const userId = localStorage.getItem("userId")
             setUserId(0)
             //if(userId!,=null){
-                setUserId(Number(userId))
-
-                fetch("./../api").then(res => res.json()).then(res => setCharsId(Array.isArray(res) ? res : null))
+                fetch("./../api").then(res => res.json()).then(res => setCharsId(Array.isArray(res) ? res : null)).then(() => setUserId(Number(userId)))
             //}
         }
     }, [])
