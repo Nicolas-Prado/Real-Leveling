@@ -3,6 +3,12 @@
 $uncompress-time: 0.9s;
 $uncompress-cooldown: 3s;
 
+.loading, .link{
+    opacity: 0;
+    cursor: default;
+    animation: emerging 0.9s 4.1s linear forwards;
+}
+
 .link{
     position: relative;
     
@@ -14,11 +20,7 @@ $uncompress-cooldown: 3s;
     min-width: 60px;
     width: 10%;
     aspect-ratio: 1;
-
-    opacity: 0;
-    cursor: default;
-    animation: emerging 0.9s 4.1s linear forwards;
-
+    
     span{
         box-sizing: border-box;
 

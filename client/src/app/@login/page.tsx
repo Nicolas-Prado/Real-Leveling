@@ -21,7 +21,7 @@ export default function Login() {
         <div className={utils['centered-div']}>
             <div className={userId!=="" ? styles.uncompressed : styles.compressed}>
                 <QueryClientProvider client={queryClient}>
-                    {userId
+                    {userId===null
                         ? <CharSlots userId={userId} />
                         : <UserLogin />
                         
