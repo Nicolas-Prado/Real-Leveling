@@ -1,7 +1,7 @@
 @use 'utils.module.scss';
 
 $uncompress-time: 0.9s;
-$uncompress-cooldown: 3s;
+$uncompress-cooldown: 0s;
 
 .uncompressed, .compressed{
     @include utils.better-border(url("/fullbg.gif"), 1px solid white, 2px, true, 50%, 80%);
@@ -34,4 +34,10 @@ $uncompress-cooldown: 3s;
     }
 
     animation: uncompressing $uncompress-time $uncompress-cooldown linear forwards;
+}
+
+@media (max-width: 1350px){
+    .uncompressed {
+        width: 80vw !important;
+    }
 }

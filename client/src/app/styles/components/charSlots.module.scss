@@ -1,12 +1,12 @@
 @use '../utils.module.scss';
 
 $uncompress-time: 0.9s;
-$uncompress-cooldown: 3s;
+$uncompress-cooldown: 0s;
 
 .loading, .link{
     opacity: 0;
     cursor: default;
-    animation: emerging 0.9s 4.1s linear forwards;
+    animation: emerging $uncompress-time $uncompress-cooldown linear forwards;
 }
 
 .link{
