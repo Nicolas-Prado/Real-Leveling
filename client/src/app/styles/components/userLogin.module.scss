@@ -17,6 +17,11 @@
         transition: all 0.4s;
     }
 
+    input:focus {
+        transform: scale(1.01);
+        filter: brightness(75%);
+    }
+
     button {
         padding: 10px;
 
@@ -27,7 +32,6 @@
     button:hover{
         transform: scale(1.05);
     }
-
 
     div {
         width: 80%;
