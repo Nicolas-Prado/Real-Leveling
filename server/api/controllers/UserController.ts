@@ -46,7 +46,6 @@ export async function getUsers(req:Request, res:Response) {
     const params = { 
         limit: parseInt(req.query.limit as string), 
         page: parseInt(req.query.page as string), 
-        id: req.query.id ? parseInt(req.query.id as string) : undefined
     }
     const data = await userService.getUsers(params.limit && params.page ? params : undefined)
 

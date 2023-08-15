@@ -18,19 +18,18 @@ export function createUser(userJSON: {username: string, password: string}){
     return newUser.save().catch(generateErrorJSON)
 }
 
-export async function getUsers(params:{limit: number, page: number, id?:number}|undefined) {
+export async function getUsers(params:{limit: number, page: number}|undefined) {
     if(typeof params === 'undefined')
         return User.findAll().catch(generateErrorJSON)
     
     try{
-        const userAmount = await User.count(typeof params.id === 'number' ? {where: {id: params.id}} : undefined)
+        const userAmount = await User.count()
 
         const totalPages = Math.ceil(userAmount/params.limit)
 
         const rows = await User.findAll({
             limit: params.limit,
             offset: (params.page-1) * params.limit,
-            where: typeof params.id === 'number' ? {id: params.id} : undefined
         })
 
         const responseBody = {
