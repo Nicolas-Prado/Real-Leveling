@@ -1,41 +1,44 @@
 import sequelize from "../../config/sequelize";
-import User from './UserModel'
+
+import Character from './CharacterModel'
 import { Model, CreationOptional, InferAttributes, InferCreationAttributes, ForeignKey, NonAttribute, DataTypes } from "sequelize";
 
-class Character extends Model<InferAttributes<Character, { omit: 'user' }>, InferCreationAttributes<Character, { omit: 'user' }>> {
+class Bond extends Model<InferAttributes<Bond, {omit: 'protagonist' | 'company'}>, InferCreationAttributes<Bond, {omit: 'protagonist' | 'company'}>> {
     declare id: CreationOptional<number>
-    declare name: string
-    declare age: number
+    declare desc: string
+    declare type: string
 
-    declare userId: ForeignKey<User['id']>
-    declare user?: NonAttribute<User>
+    declare protagonistId: ForeignKey<Character['id']>
+    declare protagonist?: NonAttribute<Character>
+
+    declare companyId: ForeignKey<Character['id']>
+    declare company?: NonAttribute<Character>
 
     declare createdAt: CreationOptional<Date>
     declare updatedAt: CreationOptional<Date>
 }
 
-Character.init(
+Bond.init(
     {
         id: {
             type: DataTypes.INTEGER.UNSIGNED,
             autoIncrement: true,
             primaryKey: true
         },
-        name: {
-            type: new DataTypes.STRING(128),
-            allowNull: false
+        desc: {
+            type: DataTypes.TEXT
         },
-        age: {
-            type: DataTypes.INTEGER.UNSIGNED,
+        type: {
+            type: new DataTypes.STRING(255),
             allowNull: false
         },
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE
     },
     {
-        tableName: 'characters',
+        tableName: 'bonds',
         sequelize
     }
 )
 
-export default Character
+export default Bond
