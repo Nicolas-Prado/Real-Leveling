@@ -45,9 +45,27 @@
     }
 }
 
-@mixin centered-div {
+.centered-div {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+@keyframes uncompressing {
+    0% {
+    }
+    100% {
+        width: 40vw;
+        height: 55vh;
+    }
+}
+
+@keyframes emerging {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }

@@ -1,0 +1,43 @@
+@use 'utils.module.scss';
+
+$uncompress-time: 0.9s;
+$uncompress-cooldown: 0s;
+
+.uncompressed, .compressed{
+    @include utils.better-border(url("/fullbg.gif"), 1px solid white, 2px, true, 50%, 80%);
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 25px 20px 25px 20px;
+
+    width: 60px;
+    height: 50px;
+}
+
+.compressed{
+    border-radius: 8px;
+
+    & * {
+        opacity: 0;
+        display: none;
+    }
+}
+
+.uncompressed{
+    & * {
+        opacity: 0;
+        animation: emerging $uncompress-time $uncompress-cooldown linear forwards;
+    }
+
+    animation: uncompressing $uncompress-time $uncompress-cooldown linear forwards;
+}
+
+@media (max-width: 1350px){
+    .uncompressed {
+        width: 80vw !important;
+    }
+}

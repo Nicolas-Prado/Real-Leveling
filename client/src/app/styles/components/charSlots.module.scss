@@ -1,44 +1,12 @@
-@use '../utils.scss';
+@use '../utils.module.scss';
 
 $uncompress-time: 0.9s;
-$uncompress-cooldown: 3s;
+$uncompress-cooldown: 0s;
 
-.centered-div {
-    @include utils.centered-div;
-}
-
-.uncompressed, .compressed{
-    @include utils.better-border(url("/fullbg.gif"), 1px solid white, 2px, true, 50%, 80%);
-    border-radius: 10px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 25px 20px 25px 20px;
-
-    width: 60px;
-    height: 50px;
-}
-
-.compressed{
-    border-radius: 8px;
-
-    & * {
-        opacity: 0;
-        display: none;
-    }
-}
-
-.uncompressed{
-    & * {
-        opacity: 0;
-        cursor: default;
-        animation: emerging $uncompress-time $uncompress-cooldown linear forwards;
-    }
-
-    animation: uncompressing $uncompress-time $uncompress-cooldown linear forwards;
+.loading, .link{
+    opacity: 0;
+    cursor: default;
+    animation: emerging $uncompress-time $uncompress-cooldown linear forwards;
 }
 
 .link{
@@ -52,11 +20,7 @@ $uncompress-cooldown: 3s;
     min-width: 60px;
     width: 10%;
     aspect-ratio: 1;
-
-    opacity: 0;
-    cursor: default;
-    animation: emerging 0.9s 4.1s linear forwards;
-
+    
     span{
         box-sizing: border-box;
 
@@ -72,23 +36,4 @@ $uncompress-cooldown: 3s;
 
 .link:hover{
     transform: scale(1.01);
-}
-
-@keyframes uncompressing {
-    0% {
-    }
-    100% {
-        width: 40vw;
-        height: 55vh;
-    }
-}
-
-@keyframes emerging {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        cursor: pointer;
-        opacity: 1;
-    }
 }
