@@ -1,5 +1,5 @@
 import { where } from "sequelize";
-import User from "../models/UserModel";
+import Desire from "../models/DesireModel";
 
 function generateErrorJSON(err:any){
     const errorJSON = {
@@ -13,21 +13,21 @@ function generateErrorJSON(err:any){
     return errorJSON
 }
 
-export function createUser(userJSON: {username: string, password: string}){
-    const newUser = User.build(userJSON)
-    return newUser.save().catch(generateErrorJSON)
+export function createDesire(desireJSON: {desc:string, name:string, status:string}){
+    const newDesire = Desire.build(desireJSON)
+    return newDesire.save().catch(generateErrorJSON)
 }
 
-export async function getUsers(params:{limit: number, page: number}|undefined) {
+export async function getDesires(params:{limit: number, page: number}|undefined) {
     if(typeof params === 'undefined')
-        return User.findAll().catch(generateErrorJSON)
+        return Desire.findAll().catch(generateErrorJSON)
     
     try{
-        const userAmount = await User.count()
+        const desireAmount = await Desire.count()
 
-        const totalPages = Math.ceil(userAmount/params.limit)
+        const totalPages = Math.ceil(desireAmount/params.limit)
 
-        const rows = await User.findAll({
+        const rows = await Desire.findAll({
             limit: params.limit,
             offset: (params.page-1) * params.limit,
         })
@@ -45,20 +45,20 @@ export async function getUsers(params:{limit: number, page: number}|undefined) {
     }
 }
 
-export function getUser(id:number) {
-    return User.findByPk(id).catch(generateErrorJSON)
+export function getDesire(id:number) {
+    return Desire.findByPk(id).catch(generateErrorJSON)
 }
 
-export function updateUser(id:number, userJSON:{username?:string, password?:string}){
-    return User.update(userJSON, {
+export function updateDesire(id:number, desireJSON:{desc?:string, name?:string, status?:string}){
+    return Desire.update(desireJSON, {
         where: {
             id: id
         }
     }).catch(generateErrorJSON)
 }
 
-export function deleteUser(id:number){
-    return User.destroy({
+export function deleteDesire(id:number){
+    return Desire.destroy({
         where: {
             id: id
         }

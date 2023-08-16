@@ -1,5 +1,5 @@
 import { where } from "sequelize";
-import User from "../models/UserModel";
+import Configuration from "../models/ConfigurationModel";
 
 function generateErrorJSON(err:any){
     const errorJSON = {
@@ -13,21 +13,21 @@ function generateErrorJSON(err:any){
     return errorJSON
 }
 
-export function createUser(userJSON: {username: string, password: string}){
-    const newUser = User.build(userJSON)
-    return newUser.save().catch(generateErrorJSON)
+export function createConfiguration(configurationJSON: {}){
+    const newConfiguration = Configuration.build(configurationJSON)
+    return newConfiguration.save().catch(generateErrorJSON)
 }
 
-export async function getUsers(params:{limit: number, page: number}|undefined) {
+export async function getConfigurations(params:{limit: number, page: number}|undefined) {
     if(typeof params === 'undefined')
-        return User.findAll().catch(generateErrorJSON)
+        return Configuration.findAll().catch(generateErrorJSON)
     
     try{
-        const userAmount = await User.count()
+        const configurationAmount = await Configuration.count()
 
-        const totalPages = Math.ceil(userAmount/params.limit)
+        const totalPages = Math.ceil(configurationAmount/params.limit)
 
-        const rows = await User.findAll({
+        const rows = await Configuration.findAll({
             limit: params.limit,
             offset: (params.page-1) * params.limit,
         })
@@ -45,20 +45,20 @@ export async function getUsers(params:{limit: number, page: number}|undefined) {
     }
 }
 
-export function getUser(id:number) {
-    return User.findByPk(id).catch(generateErrorJSON)
+export function getConfiguration(id:number) {
+    return Configuration.findByPk(id).catch(generateErrorJSON)
 }
 
-export function updateUser(id:number, userJSON:{username?:string, password?:string}){
-    return User.update(userJSON, {
+export function updateConfiguration(id:number, configurationJSON:{}){
+    return Configuration.update(configurationJSON, {
         where: {
             id: id
         }
     }).catch(generateErrorJSON)
 }
 
-export function deleteUser(id:number){
-    return User.destroy({
+export function deleteConfiguration(id:number){
+    return Configuration.destroy({
         where: {
             id: id
         }

@@ -1,12 +1,12 @@
 import { Request, Response } from "express"
-import * as characterService from "./../services/CharacterService"
+import * as historyHdrService from "../services/HistoryHdrService"
 
 /*Service functions
-    characterService.createCharacter
-    characterService.deleteCharacter
-    characterService.getCharacter
-    characterService.getCharacters
-    characterService.updateCharacter
+    historyHdrService.createHistoryHdr
+    historyHdrService.deleteHistoryHdr
+    historyHdrService.getHistoryHdr
+    historyHdrService.getHistoriesHdr
+    historyHdrService.updateHistoryHdr
 */
 
 
@@ -27,13 +27,13 @@ function invalidRequest(res:Response){
 }
 
 
-export async function createCharacter(req:Request, res:Response) {
+export async function createHistoryHdr(req:Request, res:Response) {
     if(Object.entries(req.body).length === 0){
         invalidRequest(res)
         return
     }
 
-    const data = await characterService.createCharacter(req.body)
+    const data = await historyHdrService.createHistoryHdr(req.body)
     
     res.status(201)
     if('error' in data)
@@ -42,12 +42,12 @@ export async function createCharacter(req:Request, res:Response) {
     res.json(data)
 }
 
-export async function getCharacters(req:Request, res:Response) {
+export async function getHistoriesHdr(req:Request, res:Response) {
     const params = { 
         limit: parseInt(req.query.limit as string), 
         page: parseInt(req.query.page as string), 
     }
-    const data = await characterService.getCharacters(params.limit && params.page ? params : undefined)
+    const data = await historyHdrService.getHistoriesHdr(params.limit && params.page ? params : undefined)
 
     res.status(200)
     if('error' in data)
@@ -56,13 +56,13 @@ export async function getCharacters(req:Request, res:Response) {
     res.json(data)
 }
 
-export async function getCharacter(req:Request, res:Response) {
+export async function getHistoryHdr(req:Request, res:Response) {
     if(typeof req.params.id === "undefined"){
         invalidRequest(res)
         return
     }
 
-    const data = await characterService.getCharacter(parseInt(req.params.id))
+    const data = await historyHdrService.getHistoryHdr(parseInt(req.params.id))
 
     res.status(200)
     if(data !== null && 'error' in data)
@@ -71,13 +71,13 @@ export async function getCharacter(req:Request, res:Response) {
     res.json(data)
 }
 
-export async function updateCharacter(req:Request, res:Response) {
+export async function updateHistoryHdr(req:Request, res:Response) {
     if(typeof req.params.id === "undefined" || Object.entries(req.body).length === 0){
         invalidRequest(res)
         return
     }
 
-    const data = await characterService.updateCharacter(parseInt(req.params.id), req.body)
+    const data = await historyHdrService.updateHistoryHdr(parseInt(req.params.id), req.body)
 
     res.status(200)
     if('error' in data)
@@ -86,13 +86,13 @@ export async function updateCharacter(req:Request, res:Response) {
     res.json(data)
 }
 
-export async function deleteCharacter(req:Request, res:Response) {
+export async function deleteHistoryHdr(req:Request, res:Response) {
     if(typeof req.params.id === "undefined"){
         invalidRequest(res)
         return
     }
 
-    const data = await characterService.deleteCharacter(parseInt(req.params.id))
+    const data = await historyHdrService.deleteHistoryHdr(parseInt(req.params.id))
 
     res.status(200)
     if(typeof data !== 'number' && 'error' in data)

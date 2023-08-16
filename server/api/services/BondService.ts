@@ -1,5 +1,5 @@
 import { where } from "sequelize";
-import User from "../models/UserModel";
+import Bond from "../models/BondModel";
 
 function generateErrorJSON(err:any){
     const errorJSON = {
@@ -13,21 +13,21 @@ function generateErrorJSON(err:any){
     return errorJSON
 }
 
-export function createUser(userJSON: {username: string, password: string}){
-    const newUser = User.build(userJSON)
-    return newUser.save().catch(generateErrorJSON)
+export function createBond(bondJSON: {desc:string, type:string}){
+    const newBond = Bond.build(bondJSON)
+    return newBond.save().catch(generateErrorJSON)
 }
 
-export async function getUsers(params:{limit: number, page: number}|undefined) {
+export async function getBonds(params:{limit: number, page: number}|undefined) {
     if(typeof params === 'undefined')
-        return User.findAll().catch(generateErrorJSON)
+        return Bond.findAll().catch(generateErrorJSON)
     
     try{
-        const userAmount = await User.count()
+        const bondAmount = await Bond.count()
 
-        const totalPages = Math.ceil(userAmount/params.limit)
+        const totalPages = Math.ceil(bondAmount/params.limit)
 
-        const rows = await User.findAll({
+        const rows = await Bond.findAll({
             limit: params.limit,
             offset: (params.page-1) * params.limit,
         })
@@ -45,20 +45,20 @@ export async function getUsers(params:{limit: number, page: number}|undefined) {
     }
 }
 
-export function getUser(id:number) {
-    return User.findByPk(id).catch(generateErrorJSON)
+export function getBond(id:number) {
+    return Bond.findByPk(id).catch(generateErrorJSON)
 }
 
-export function updateUser(id:number, userJSON:{username?:string, password?:string}){
-    return User.update(userJSON, {
+export function updateBond(id:number, bondJSON:{desc?:string, type?:string}){
+    return Bond.update(bondJSON, {
         where: {
             id: id
         }
     }).catch(generateErrorJSON)
 }
 
-export function deleteUser(id:number){
-    return User.destroy({
+export function deleteBond(id:number){
+    return Bond.destroy({
         where: {
             id: id
         }
