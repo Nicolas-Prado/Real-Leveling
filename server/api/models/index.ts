@@ -19,7 +19,9 @@ User.hasMany(Character, {
 })
 */
 
-/* Syncs
+//Character.belongsTo(User, { targetKey: 'id' });
+
+/* Syncs*/
 User.sync({alter: true})
 Character.sync({alter: true})
 Configuration.sync({alter: true})
@@ -29,4 +31,4 @@ Bond.sync({alter: true})
 Desire.sync({alter: true})
 Task.sync({alter: true})
 HistoryLin.sync({alter: true})
-*/
+

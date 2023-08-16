@@ -1,18 +1,38 @@
-import { useMutation } from "react-query"
-import { useState } from "react"
+import { useMutation, useQuery } from "react-query"
+import { SetStateAction, useState } from "react"
 import styles from "../styles/components/userLogin.module.scss"
+import { cookies } from "next/headers";
 
-export default function UserLogin(){
+export default function UserLogin({ setUserId }: { setUserId: (value: SetStateAction<string | null>) => void }){
     const [isNew, setIsNew] = useState(false);
 
-    const userMutation = useMutation({
+    const createUserMutation = useMutation({
         mutationFn: (newUser: { [k:string]: FormDataEntryValue }) => {
-            return fetch('./../api', {
+            return fetch('http://localhost:22194/users/', {
                 method: "POST",
                 body: JSON.stringify(newUser),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ELPSYKONGROO` 
+                }
             }).then(res => res.json()).then((res) => {
                 if(typeof window !== 'undefined')
-                    localStorage.setItem("userId", res.userId)
+                    localStorage.setItem("userId", res.id)
+                setUserId(res.id)
+            })
+        }
+    })
+
+    const getUserMutation = useMutation({
+        mutationFn: (user: { [k:string]: FormDataEntryValue }) => {
+            return fetch(`http://localhost:22194/users?username=${user.username}&password=${user.password}`, {
+                headers: {
+                    'Authorization': `Bearer ELPSYKONGROO` 
+                }
+            }).then(res => res.json()).then((res) => {
+                if(typeof window !== 'undefined')
+                    localStorage.setItem("userId", res.id)
+                setUserId(res.id)
             })
         }
     })
@@ -24,7 +44,10 @@ export default function UserLogin(){
 
         const formJson = Object.fromEntries(formData.entries())
 
-        userMutation.mutate(formJson)
+        if(isNew)
+            createUserMutation.mutate(formJson)
+        else
+            getUserMutation.mutate(formJson)
     }
 
     return (
@@ -44,7 +67,7 @@ export default function UserLogin(){
                 <label className={styles["is-new"]} htmlFor="isnew" onClick={() => setIsNew((prev) => !prev)}>New user ?</label>
             </div>
 
-            <button type="submit">{!isNew ? "Submit" : "Create"}</button>
+            <button type="submit">{!isNew ? "Login" : "Create"}</button>
         </form>
     )
 }

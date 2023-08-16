@@ -1,5 +1,6 @@
 import { where } from "sequelize";
 import Character from "../models/CharacterModel";
+import Title from "../models/TitleModel";
 
 function generateErrorJSON(err:any){
     const errorJSON = {
@@ -18,7 +19,7 @@ export function createCharacter(characterJSON: {name: string, age: number}){
     return newCharacter.save().catch(generateErrorJSON)
 }
 
-export async function getCharacters(params:{limit: number, page: number}|undefined) {
+export async function getCharacters(params:{limit: number, page: number, userid?: number}|undefined) {
     if(typeof params === 'undefined')
         return Character.findAll().catch(generateErrorJSON)
     
@@ -30,6 +31,53 @@ export async function getCharacters(params:{limit: number, page: number}|undefin
         const rows = await Character.findAll({
             limit: params.limit,
             offset: (params.page-1) * params.limit,
+            where: {
+                ...params.userid ? { userid: params.userid } : {},
+            }
+        })
+
+        const responseBody = {
+            results: rows,
+            totalPages: totalPages,
+            currentPage: params.page
+        }
+
+        return responseBody
+
+    } catch (err:any) {
+        return generateErrorJSON(err)
+    }
+}
+
+export async function getCharactersWithTitleAndLevel(params:{limit: number, page: number, userid?: number}|undefined) {
+    if(typeof params === 'undefined'){
+        return Character.findAll({
+            include: [{
+                model: Title,
+                as: 'titles',
+                required: true,
+                where: { inUse: 1 }
+            }]
+        }).catch(generateErrorJSON)
+    }
+    
+    try{
+        const characterAmount = await Character.count()
+
+        const totalPages = Math.ceil(characterAmount/params.limit)
+
+        let rows = await Character.findAll({
+            limit: params.limit,
+            offset: (params.page-1) * params.limit,
+            include: [{
+                model: Title,
+                as: 'titles',
+                required: true,
+                where: { inUse: 1 }
+            }],
+            where: {
+                ...params.userid ? { userId: params.userid } : {},
+            }
         })
 
         const responseBody = {

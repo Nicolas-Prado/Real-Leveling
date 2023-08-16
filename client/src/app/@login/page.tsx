@@ -15,7 +15,7 @@ export default function Login() {
         if(typeof window !== "undefined"){
             setUserId(localStorage.getItem('userId'))
         }
-    }, [])
+    }, [userId])
 
     return(
         <div className={utils['centered-div']}>
@@ -23,7 +23,7 @@ export default function Login() {
                 <QueryClientProvider client={queryClient}>
                     {userId!==null
                         ? <CharSlots userId={userId} />
-                        : <UserLogin />
+                        : <UserLogin setUserId={setUserId}/>
                         
                     }
                 </QueryClientProvider>

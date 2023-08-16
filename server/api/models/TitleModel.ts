@@ -8,6 +8,7 @@ class Title extends Model<InferAttributes<Title, {omit: 'character'}>, InferCrea
     declare desc: string
     declare name: string
     declare requirements: string
+    declare inUse: boolean
 
     declare characterId: ForeignKey<Character['id']>
     declare character?: NonAttribute<Character>
@@ -28,10 +29,17 @@ Title.init(
         },
         name: {
             type: new DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
         },
         requirements: {
             type: DataTypes.TEXT
+        },
+        inUse: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
         },
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE

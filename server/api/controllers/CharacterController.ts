@@ -46,8 +46,24 @@ export async function getCharacters(req:Request, res:Response) {
     const params = { 
         limit: parseInt(req.query.limit as string), 
         page: parseInt(req.query.page as string), 
+        userId: parseInt(req.query.userid as string)
     }
     const data = await characterService.getCharacters(params.limit && params.page ? params : undefined)
+
+    res.status(200)
+    if('error' in data)
+        res.status(getHttpErrorStatusCode(data))
+
+    res.json(data)
+}
+
+export async function getCharactersWithTitleAndLevel(req:Request, res:Response) {
+    const params = { 
+        limit: parseInt(req.query.limit as string), 
+        page: parseInt(req.query.page as string), 
+        userId: parseInt(req.query.userid as string)
+    }
+    const data = await characterService.getCharactersWithTitleAndLevel(params.limit && params.page ? params : undefined)
 
     res.status(200)
     if('error' in data)

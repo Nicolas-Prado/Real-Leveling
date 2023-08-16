@@ -45,11 +45,17 @@ Character.init(
         },
         name: {
             type: new DataTypes.STRING(128),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
         },
         age: {
             type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
         },
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE

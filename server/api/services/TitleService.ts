@@ -13,7 +13,7 @@ function generateErrorJSON(err:any){
     return errorJSON
 }
 
-export function createTitle(titleJSON: {desc: string, name: string, requirements: string}){
+export function createTitle(titleJSON: {desc: string, name: string, requirements: string, inUse: boolean}){
     const newTitle = Title.build(titleJSON)
     return newTitle.save().catch(generateErrorJSON)
 }
@@ -49,7 +49,7 @@ export function getTitle(id:number) {
     return Title.findByPk(id).catch(generateErrorJSON)
 }
 
-export function updateTitle(id:number, titleJSON:{desc?:string, name?:string, requirements?:string}){
+export function updateTitle(id:number, titleJSON:{desc?:string, name?:string, requirements?:string, inUse?:boolean}){
     return Title.update(titleJSON, {
         where: {
             id: id
