@@ -1,5 +1,5 @@
 import sequelize from "../../config/sequelize";
-import Bond from "./BondsModel";
+import Bond from "./BondModel";
 import Configuration from "./ConfigurationModel";
 import Desire from "./DesireModel";
 import HistoryHdr from "./HistoryHdrModel";

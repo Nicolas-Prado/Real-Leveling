@@ -1,5 +1,5 @@
 import { where } from "sequelize";
-import User from "../models/UserModel";
+import Title from "../models/TitleModel";
 
 function generateErrorJSON(err:any){
     const errorJSON = {
@@ -13,21 +13,21 @@ function generateErrorJSON(err:any){
     return errorJSON
 }
 
-export function createUser(userJSON: {username: string, password: string}){
-    const newUser = User.build(userJSON)
-    return newUser.save().catch(generateErrorJSON)
+export function createTitle(titleJSON: {desc: string, name: string, requirements: string}){
+    const newTitle = Title.build(titleJSON)
+    return newTitle.save().catch(generateErrorJSON)
 }
 
-export async function getUsers(params:{limit: number, page: number}|undefined) {
+export async function getTitles(params:{limit: number, page: number}|undefined) {
     if(typeof params === 'undefined')
-        return User.findAll().catch(generateErrorJSON)
+        return Title.findAll().catch(generateErrorJSON)
     
     try{
-        const userAmount = await User.count()
+        const titleAmount = await Title.count()
 
-        const totalPages = Math.ceil(userAmount/params.limit)
+        const totalPages = Math.ceil(titleAmount/params.limit)
 
-        const rows = await User.findAll({
+        const rows = await Title.findAll({
             limit: params.limit,
             offset: (params.page-1) * params.limit,
         })
@@ -45,20 +45,20 @@ export async function getUsers(params:{limit: number, page: number}|undefined) {
     }
 }
 
-export function getUser(id:number) {
-    return User.findByPk(id).catch(generateErrorJSON)
+export function getTitle(id:number) {
+    return Title.findByPk(id).catch(generateErrorJSON)
 }
 
-export function updateUser(id:number, userJSON:{username?:string, password?:string}){
-    return User.update(userJSON, {
+export function updateTitle(id:number, titleJSON:{desc?:string, name?:string, requirements?:string}){
+    return Title.update(titleJSON, {
         where: {
             id: id
         }
     }).catch(generateErrorJSON)
 }
 
-export function deleteUser(id:number){
-    return User.destroy({
+export function deleteTitle(id:number){
+    return Title.destroy({
         where: {
             id: id
         }

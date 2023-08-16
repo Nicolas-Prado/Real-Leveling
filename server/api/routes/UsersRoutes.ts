@@ -1,15 +1,15 @@
 import express from "express"
-import * as usersController from "./../controllers/UserController"
+import * as userController from "./../controllers/UserController"
 
 const router = express.Router()
 
 router.route('/')
-    .post(usersController.createUser)
-    .get(usersController.getUsers)
+    .post(userController.createUser)
+    .get(userController.getUsers)
 
 router.route('/:id')
-    .put(usersController.updateUser)
-    .delete(usersController.deleteUser)
-    .get(usersController.getUser)
+    .put(userController.updateUser)
+    .delete(userController.deleteUser)
+    .get(userController.getUser)
 
 export = router
