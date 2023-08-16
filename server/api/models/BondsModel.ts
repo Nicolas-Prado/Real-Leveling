@@ -3,7 +3,7 @@ import sequelize from "../../config/sequelize";
 import Character from './CharacterModel'
 import { Model, CreationOptional, InferAttributes, InferCreationAttributes, ForeignKey, NonAttribute, DataTypes } from "sequelize";
 
-class Bond extends Model<InferAttributes<Bond, {omit: 'protagonist' | 'company'}>, InferCreationAttributes<Bond, {omit: 'protagonist' | 'company'}>> {
+class Bond extends Model<InferAttributes<Bond, {omit: 'protagonist' | 'companion'}>, InferCreationAttributes<Bond, {omit: 'protagonist' | 'companion'}>> {
     declare id: CreationOptional<number>
     declare desc: string
     declare type: string
@@ -11,8 +11,8 @@ class Bond extends Model<InferAttributes<Bond, {omit: 'protagonist' | 'company'}
     declare protagonistId: ForeignKey<Character['id']>
     declare protagonist?: NonAttribute<Character>
 
-    declare companyId: ForeignKey<Character['id']>
-    declare company?: NonAttribute<Character>
+    declare companionId: ForeignKey<Character['id']>
+    declare companion?: NonAttribute<Character>
 
     declare createdAt: CreationOptional<Date>
     declare updatedAt: CreationOptional<Date>

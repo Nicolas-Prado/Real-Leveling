@@ -49,4 +49,10 @@ Task.init(
     }
 )
 
+Task.hasMany(Reward, {
+    sourceKey: 'id',
+    foreignKey: 'taskId',
+    as: 'rewards'
+})
+
 export default Task

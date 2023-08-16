@@ -4,7 +4,7 @@ import Character from './CharacterModel'
 import { Model, CreationOptional, InferAttributes, InferCreationAttributes, ForeignKey, NonAttribute, DataTypes, Association } from "sequelize";
 import HistoryLin from "./HistoryLinModel";
 
-class HistoryHdr extends Model<InferAttributes<HistoryHdr, {omit: 'character' | 'historyLins'}>, InferCreationAttributes<HistoryHdr, {omit: 'character' | 'historyLins'}>> {
+class HistoryHdr extends Model<InferAttributes<HistoryHdr, {omit: 'character' | 'historiesLin'}>, InferCreationAttributes<HistoryHdr, {omit: 'character' | 'historiesLin'}>> {
     declare id: CreationOptional<number>
     declare synopsis: string
 
@@ -14,10 +14,10 @@ class HistoryHdr extends Model<InferAttributes<HistoryHdr, {omit: 'character' | 
     declare createdAt: CreationOptional<Date>
     declare updatedAt: CreationOptional<Date>
 
-    declare historyLins?: NonAttribute<Character[]>
+    declare historiesLin?: NonAttribute<Character[]>
 
     declare static associations: {
-        historyLins: Association<HistoryHdr, HistoryLin>
+        historiesLin: Association<HistoryHdr, HistoryLin>
     }
 }
 
@@ -39,5 +39,11 @@ HistoryHdr.init(
         sequelize
     }
 )
+
+HistoryHdr.hasMany(HistoryLin, {
+    sourceKey: 'id',
+    foreignKey: 'historyHdrId',
+    as: 'historiesLin'
+})
 
 export default HistoryHdr
