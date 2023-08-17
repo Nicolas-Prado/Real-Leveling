@@ -24,7 +24,6 @@ export default function Login() {
                     {userId!==null
                         ? <CharSlots userId={userId} />
                         : <UserLogin setUserId={setUserId}/>
-                        
                     }
                 </QueryClientProvider>
             </div>

@@ -43,7 +43,7 @@ export default function CharSlots({ userId }: { userId: string }){
                 ? characters.map(char => <CharSlot key={char.id} name={char.name} level={char.level} title={char.title} />)
                 : <p className={styles.loading}>Loading...</p>
             }
-            <Link className={styles.link} href={"/register"}><span>+</span></Link>
+            <Link className={styles.link} href={`/create-char?userid=${userId}`}><span>+</span></Link>
         </>
     )
 }

@@ -6,33 +6,41 @@ import HistoryHdr from "./HistoryHdrModel";
 import Task from "./TaskModel";
 import Title from "./TitleModel";
 import User from './UserModel'
-import { Model, CreationOptional, InferAttributes, InferCreationAttributes, ForeignKey, NonAttribute, DataTypes, Association } from "sequelize";
+import { Model, CreationOptional, InferAttributes, InferCreationAttributes, ForeignKey, NonAttribute, DataTypes, Association, HasManyCreateAssociationMixin } from "sequelize";
 
 class Character extends Model<InferAttributes<Character, { omit: 'user' }>, InferCreationAttributes<Character, { omit: 'user' }>> {
     declare id: CreationOptional<number>
     declare name: string
-    declare age: number
+    declare bornDate: string
+    declare imagePath: string|null
 
     declare userId: ForeignKey<User['id']>
     declare user?: NonAttribute<User>
 
     declare createdAt: CreationOptional<Date>
     declare updatedAt: CreationOptional<Date>
+    
+    declare createTitle: HasManyCreateAssociationMixin<Title, 'characterId'>;
+    declare createHistoryHdr: HasManyCreateAssociationMixin<HistoryHdr, 'characterId'>;
 
-    declare configurations?: NonAttribute<Configuration[]>
+    declare configuration?: NonAttribute<Configuration>
     declare titles?: NonAttribute<Title[]>
     declare historiesHdr?: NonAttribute<HistoryHdr[]>
     declare bonds?: NonAttribute<Bond[]>
     declare desires?: NonAttribute<Desire[]>
     declare tasks?: NonAttribute<Task[]>
+    declare address?: NonAttribute<Address>
+    declare roles?: NonAttribute<Role[]>
 
     declare public static associations: { 
-        configurations: Association<Character, Configuration>
+        configuration: Association<Character, Configuration>
         titles: Association<Character, Title>
         historiesHdr: Association<Character, HistoryHdr>
         bonds: Association<Character, Bond>
         desires: Association<Character, Desire>
         tasks: Association<Character, Task>
+        address: Association<Character, Address>
+        roles: Association<Character, Role>
     }
 }
 
@@ -50,12 +58,22 @@ Character.init(
                 notEmpty: true
             }
         },
-        age: {
-            type: DataTypes.INTEGER.UNSIGNED,
+        bornDate: {
+            type: DataTypes.DATE,
             allowNull: false,
             validate: {
-                notEmpty: true
+                notEmpty: true,
+                isBefore: (() => {
+                    let date = new Date()
+                    date.setDate(date.getDate() + 1)
+
+                    return date.toISOString().slice(0,10)
+                })()
             }
+        },
+        imagePath: {
+            type: new DataTypes.STRING(255),
+            unique: true
         },
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE
@@ -66,7 +84,7 @@ Character.init(
     }
 )
 
-Character.hasMany(Configuration, {
+Character.hasOne(Configuration, {
     sourceKey: 'id',
     foreignKey: 'characterId',
     as: 'configurations'

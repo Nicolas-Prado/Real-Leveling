@@ -10,6 +10,9 @@ router.route('/')
 router.route('/title')
     .get(characterController.getCharactersWithTitleAndLevel)
 
+router.route('/improved')
+    .post(characterController.improvedCreateCharacter)
+
 router.route('/:id')
     .put(characterController.updateCharacter)
     .delete(characterController.deleteCharacter)

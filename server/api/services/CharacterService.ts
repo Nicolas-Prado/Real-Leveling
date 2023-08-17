@@ -1,4 +1,6 @@
 import { where } from "sequelize";
+import { Request, Response } from "express"
+import upload from "./../../config/multer"
 import Character from "../models/CharacterModel";
 import Title from "../models/TitleModel";
 
@@ -14,9 +16,51 @@ function generateErrorJSON(err:any){
     return errorJSON
 }
 
-export function createCharacter(characterJSON: {name: string, age: number}){
+export function createCharacter(characterJSON: {name: string, bornDate: string, imagePath?: string}){
     const newCharacter = Character.build(characterJSON)
     return newCharacter.save().catch(generateErrorJSON)
+}
+
+export async function improvedCreateCharacter(req:Request, res:Response){
+    try { 
+        //Image upload
+        upload.single('image')(req, res, async function errorLaucher(err:string|any) {
+            if (err) 
+                return {
+                    error: {
+                        type: "Upload error",
+                        field: "Image",
+                        message: "Error in the process of image upload"
+                    }
+                }
+        })
+
+        const { body } = req
+
+        const newCharacter = await Character.create({
+            name: body.name,
+            bornDate: body.bornDate,
+            imagePath: req.file!.filename
+        })
+
+        const newTitle = newCharacter.createTitle({
+            desc: body.titleDesc,
+            name: body.titleName,
+            requirements: body.titleRequirements,
+            inUse: true
+        })
+
+        const newHistoryHdr = newCharacter.createHistoryHdr({
+            synopsis: body.synopsis
+        })
+
+        return { character: newCharacter,  title: newTitle, history: newHistoryHdr}
+
+    }catch (err:any) {
+        if(err.error)
+            return err
+        return generateErrorJSON(err)
+    }
 }
 
 export async function getCharacters(params:{limit: number, page: number, userid?: number}|undefined) {

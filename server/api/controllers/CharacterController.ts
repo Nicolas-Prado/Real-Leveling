@@ -42,6 +42,21 @@ export async function createCharacter(req:Request, res:Response) {
     res.json(data)
 }
 
+export async function improvedCreateCharacter(req:Request, res:Response) {
+    if(Object.entries(req.body).length === 0){
+        invalidRequest(res)
+        return
+    }
+
+    const data = await characterService.improvedCreateCharacter(req, res)
+
+    res.status(201)
+    if('error' in data)
+        res.status(getHttpErrorStatusCode(data))
+    
+    res.json(data)
+}
+
 export async function getCharacters(req:Request, res:Response) {
     const params = { 
         limit: parseInt(req.query.limit as string), 
