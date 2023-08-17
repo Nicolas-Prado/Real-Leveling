@@ -25,7 +25,8 @@ export async function improvedCreateCharacter(req:Request, res:Response){
     try { 
         //Image upload
         upload.single('image')(req, res, async function errorLaucher(err:string|any) {
-            if (err) 
+            if (err){
+                console.log('sus')
                 return {
                     error: {
                         type: "Upload error",
@@ -33,25 +34,29 @@ export async function improvedCreateCharacter(req:Request, res:Response){
                         message: "Error in the process of image upload"
                     }
                 }
+            }
         })
 
         const { body } = req
 
+        console.log(body.name, body.bornDate, body.userId, body.imagePath, body.desc, body.name, body.requirements, body.imagePath)
+
         const newCharacter = await Character.create({
-            name: body.name,
-            bornDate: body.bornDate,
-            imagePath: req.file!.filename
+            name: "Worcnaaafafwdzzz",
+            bornDate: "2004-12-28",
+            userId: 1,
+            imagePath: "sdwwaafawfawfadusss"
         })
 
         const newTitle = newCharacter.createTitle({
-            desc: body.titleDesc,
-            name: body.titleName,
-            requirements: body.titleRequirements,
+            desc: "May the weakawfawawdest turn into the strongest one",
+            name: "The weakestaawfwawd one",
+            requirements: "Enter fwafinawd the real leveling",
             inUse: true
         })
 
         const newHistoryHdr = newCharacter.createHistoryHdr({
-            synopsis: body.synopsis
+            synopsis: "susawdasdds"
         })
 
         return { character: newCharacter,  title: newTitle, history: newHistoryHdr}
@@ -59,6 +64,7 @@ export async function improvedCreateCharacter(req:Request, res:Response){
     }catch (err:any) {
         if(err.error)
             return err
+        console.log(err)
         return generateErrorJSON(err)
     }
 }

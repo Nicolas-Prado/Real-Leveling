@@ -1,6 +1,7 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 
+import express from "express";
 import server from "./config/express"
 import rootRoutes from "./api/routes";
 
@@ -31,6 +32,8 @@ server.get('/', (req, res) => {
 })
 
 server.use('/', rootRoutes)
+
+server.use('/uploads', express.static('uploads'))
 
 const port = process.env.PORT
 server.listen(port, () => {

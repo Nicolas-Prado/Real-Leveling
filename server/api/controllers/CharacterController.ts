@@ -43,15 +43,15 @@ export async function createCharacter(req:Request, res:Response) {
 }
 
 export async function improvedCreateCharacter(req:Request, res:Response) {
-    if(Object.entries(req.body).length === 0){
+    /*if(Object.entries(req.body).length === 0){
         invalidRequest(res)
         return
-    }
+    }*/
 
     const data = await characterService.improvedCreateCharacter(req, res)
 
     res.status(201)
-    if('error' in data)
+    if('error' in data!)
         res.status(getHttpErrorStatusCode(data))
     
     res.json(data)
