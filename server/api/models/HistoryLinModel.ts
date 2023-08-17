@@ -25,11 +25,17 @@ HistoryLin.init(
         },
         arc: {
             type: new DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
         },
         periody: {
             type: new DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
         },
         desc: {
             type: DataTypes.TEXT,

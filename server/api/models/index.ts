@@ -1,6 +1,8 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 
+import sequelize from "../../config/sequelize";
+
 import User from "./UserModel";
 import Character from "./CharacterModel";
 import Configuration from "./ConfigurationModel";
@@ -19,7 +21,10 @@ User.hasMany(Character, {
 })
 */
 
-/* Syncs
+//Character.belongsTo(User, { targetKey: 'id' });
+
+/* Syncs*/
+//sequelize.sync({ force: true })
 User.sync({alter: true})
 Character.sync({alter: true})
 Configuration.sync({alter: true})
@@ -29,4 +34,4 @@ Bond.sync({alter: true})
 Desire.sync({alter: true})
 Task.sync({alter: true})
 HistoryLin.sync({alter: true})
-*/
+

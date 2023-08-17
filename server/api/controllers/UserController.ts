@@ -1,4 +1,4 @@
-import { Request, Response } from "express"
+import { NextFunction, Request, Response } from "express"
 import * as userService from "./../services/UserService"
 
 /*Service functions
@@ -56,13 +56,13 @@ export async function getUsers(req:Request, res:Response) {
     res.json(data)
 }
 
-export async function getUser(req:Request, res:Response) {
-    if(typeof req.params.id === "undefined"){
-        invalidRequest(res)
+export async function getUser(req:Request, res:Response, next:NextFunction) {
+    if(typeof req.query.username !== "string" || typeof req.query.password !== "string"){
+        next()
         return
     }
 
-    const data = await userService.getUser(parseInt(req.params.id))
+    const data = await userService.getUser(req.query.username, req.query.password)
 
     res.status(200)
     if(data !== null && 'error' in data)

@@ -28,7 +28,10 @@ Desire.init(
         },
         name: {
             type: new DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
         },
         status: {
             type: DataTypes.BOOLEAN

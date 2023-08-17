@@ -41,11 +41,18 @@ User.init(
         },
         username: {
             type: new DataTypes.STRING(100),
-            allowNull: false
+            unique: true,
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
         },
         password: {
             type: new DataTypes.STRING(100),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
         },
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE

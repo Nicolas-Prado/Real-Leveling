@@ -13,7 +13,7 @@ function generateErrorJSON(err:any){
     return errorJSON
 }
 
-export function createUser(userJSON: {username: string, password: string}){
+export async function createUser(userJSON: {username: string, password: string}){
     const newUser = User.build(userJSON)
     return newUser.save().catch(generateErrorJSON)
 }
@@ -45,8 +45,13 @@ export async function getUsers(params:{limit: number, page: number}|undefined) {
     }
 }
 
-export function getUser(id:number) {
-    return User.findByPk(id).catch(generateErrorJSON)
+export function getUser(username:string, password:string) {
+    return User.findOne({
+        where: {
+            username: username,
+            password: password
+        }
+    }).catch(generateErrorJSON)
 }
 
 export function updateUser(id:number, userJSON:{username?:string, password?:string}){

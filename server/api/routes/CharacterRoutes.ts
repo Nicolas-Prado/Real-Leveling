@@ -7,6 +7,12 @@ router.route('/')
     .post(characterController.createCharacter)
     .get(characterController.getCharacters)
 
+router.route('/title')
+    .get(characterController.getCharactersWithTitleAndLevel)
+
+router.route('/improved')
+    .post(characterController.improvedCreateCharacter)
+
 router.route('/:id')
     .put(characterController.updateCharacter)
     .delete(characterController.deleteCharacter)
