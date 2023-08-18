@@ -16,11 +16,13 @@ export default function Login() {
 
     return(
         <div className={utils['centered-div']}>
-            <div className={userId!=="" ? styles.uncompressed : styles.compressed}>
-                {userId!==null
-                    ? <CharSlots userId={userId} />
-                    : <UserLogin setUserId={setUserId}/>
-                }
+            <div className={styles['four-corner-border']}>
+                <div className={userId!=="" ? styles.uncompressed : styles.compressed}>
+                    {userId!==null
+                        ? <CharSlots userId={userId} />
+                        : <UserLogin setUserId={setUserId}/>
+                    }
+                </div>
             </div>
         </div>
     )
