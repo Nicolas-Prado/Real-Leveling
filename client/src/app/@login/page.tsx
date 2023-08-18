@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from "react"
 import CharSlots from "../components/CharSlots"
 import UserLogin from "../components/UserLogin"

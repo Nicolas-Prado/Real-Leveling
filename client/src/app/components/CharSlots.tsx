@@ -18,12 +18,12 @@ export default function CharSlots({ userId }: { userId: string }){
     const characterQuery = useQuery({
         queryKey: ["characters", userId],
         queryFn: () => {
-            return fetch(`http://localhost:22194/characters/title?userid=${userId}`, {
+            return fetch(`http://localhost:22194/characters/title?limit=3&page=1&userid=${userId}`, {
                 headers: {
                     'Authorization': `Bearer ELPSYKONGROO` 
                 }
             }).then(res => res.json()).then((res) => {
-                const charactersJSON = res.map((charJson:{id:number, name:number, titles:{name:string}[]}) => {
+                const charactersJSON = res.results.map((charJson:{id:number, name:number, titles:{name:string}[]}) => {
                     return {
                         id:charJson.id,
                         name:charJson.name,

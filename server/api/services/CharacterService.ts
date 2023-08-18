@@ -22,51 +22,44 @@ export function createCharacter(characterJSON: {name: string, bornDate: string, 
 }
 
 export async function improvedCreateCharacter(req:Request, res:Response){
-    try { 
-        //Image upload
-        upload.single('image')(req, res, async function errorLaucher(err:string|any) {
-            if (err){
-                console.log('sus')
-                return {
+    return new Promise<{ character: {},  title: {}, history: {} } | {error:{type:string, field:any[], message:string|any[]}}>(async (resolve, reject) => {
+        upload.single('image')(req, res, async function (err) {
+            if (err)
+                resolve ({
                     error: {
                         type: "Upload error",
-                        field: "Image",
+                        field: ["image"],
                         message: "Error in the process of image upload"
                     }
-                }
+                })
+
+            try{
+                const { body } = req
+        
+                const newCharacter = await Character.create({
+                    name: body.name,
+                    bornDate: body.bornDate,
+                    userId: body.userId,
+                    imagePath: req.file?.path
+                })
+        
+                const newTitle = await newCharacter.createTitle({
+                    desc: body.titleDesc,
+                    name: body.titleName,
+                    requirements: body.titleRequirements,
+                    inUse: true
+                })
+        
+                const newHistoryHdr = await newCharacter.createHistoryHdr({
+                    synopsis: body.synopsis
+                })
+        
+                resolve({ character: newCharacter,  title: newTitle, history: newHistoryHdr })
+            } catch (err:any) {
+                resolve(generateErrorJSON(err))
             }
         })
-
-        const { body } = req
-
-        console.log(body.name, body.bornDate, body.userId, body.imagePath, body.desc, body.name, body.requirements, body.imagePath)
-
-        const newCharacter = await Character.create({
-            name: "Worcnaaafafwdzzz",
-            bornDate: "2004-12-28",
-            userId: 1,
-            imagePath: "sdwwaafawfawfadusss"
-        })
-
-        const newTitle = newCharacter.createTitle({
-            desc: "May the weakawfawawdest turn into the strongest one",
-            name: "The weakestaawfwawd one",
-            requirements: "Enter fwafinawd the real leveling",
-            inUse: true
-        })
-
-        const newHistoryHdr = newCharacter.createHistoryHdr({
-            synopsis: "susawdasdds"
-        })
-
-        return { character: newCharacter,  title: newTitle, history: newHistoryHdr}
-
-    }catch (err:any) {
-        if(err.error)
-            return err
-        console.log(err)
-        return generateErrorJSON(err)
-    }
+    })
 }
 
 export async function getCharacters(params:{limit: number, page: number, userid?: number}|undefined) {
@@ -99,7 +92,7 @@ export async function getCharacters(params:{limit: number, page: number, userid?
     }
 }
 
-export async function getCharactersWithTitleAndLevel(params:{limit: number, page: number, userid?: number}|undefined) {
+export async function getCharactersWithTitleAndLevel(params:{limit: number, page: number, userId?: number}|undefined) {
     if(typeof params === 'undefined'){
         return Character.findAll({
             include: [{
@@ -126,7 +119,7 @@ export async function getCharactersWithTitleAndLevel(params:{limit: number, page
                 where: { inUse: 1 }
             }],
             where: {
-                ...params.userid ? { userId: params.userid } : {},
+                ...params.userId ? { userId: params.userId } : {},
             }
         })
 
