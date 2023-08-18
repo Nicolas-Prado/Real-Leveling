@@ -33,7 +33,7 @@ export default function Page({
         const titleDesc = "The weakest one joined in the world"
         const titleRequirements = "Join in real leveling"
 
-        formData.append('userId', searchParams.userId as string)
+        formData.append('userId', searchParams.userid as string)
         formData.append('titleName', titleName as string)
         formData.append('titleDesc', titleDesc),
         formData.append('titleRequirements', titleRequirements)
