@@ -1,4 +1,4 @@
-@mixin better-border($bg, $border, $border-size: 1px, $is-url: false, $x-hole: 60%, $y-hole: 60%) {
+@mixin four-corner-border($bg, $border, $border-size: 1px, $is-url: false, $x-hole: 60%, $y-hole: 60%) {
     position: relative;
 
     border: $border;
@@ -42,6 +42,52 @@
 
         width: calc(calc(100% + calc(2 * $border-size)) + 2px);
         height: $x-hole;
+    }
+}
+
+@mixin two-corner-border($bg, $border, $borde-size: 1px, $is-url: false, $left-hole: 50%, $right-hole: 50%) {
+    position: relative;
+
+    border: $border;
+    border-width: $borde-size;
+
+    padding: 5px;
+
+    z-index: -3;
+
+    &::after, &::before {
+        content: '';
+        position: absolute;
+
+        //border: 1px solid wheat;
+
+        z-index: -2;
+
+        @if $is-url {
+            background: $bg no-repeat fixed;
+            background-size: 100vw 100vh;
+            background-position: calc(0px - 0%) calc(0px - 0%);
+        } @else {
+            background-color: $bg;
+        }
+    }
+
+    &::before {
+        bottom: 0px;
+        left: 0px;
+        transform: translate(-50%, 50%);
+        
+        width: $left-hole;
+        height: $left-hole;
+    }
+
+    &::after {
+        top: 0px;
+        right: 0px;
+        transform: translate(50%,-50%);
+
+        width: $right-hole;
+        height: $right-hole;
     }
 }
 

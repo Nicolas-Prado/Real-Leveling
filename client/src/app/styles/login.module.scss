@@ -4,7 +4,7 @@ $uncompress-time: 0.9s;
 $uncompress-cooldown: 0s;
 
 .uncompressed, .compressed{
-    @include utils.better-border(url("/fullbg.gif"), 1px solid white, 2px, true, 50%, 80%);
+    @include utils.two-corner-border(url("/fullbg.gif"), 1px solid white, 2px, true, 50%, 50%);
     border-radius: 10px;
 
     display: flex;
