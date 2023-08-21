@@ -47,13 +47,11 @@
 
     padding: $padding;
 
-    z-index: -3;
+    z-index: 0;
 
     &::after, &::before {
         content: '';
         position: absolute;
-
-        z-index: -2;
 
         background: $background no-repeat fixed;
 
@@ -63,6 +61,8 @@
         bottom: 0px;
         left: 0px;
         transform: translate(-$border-width, $border-width);
+
+        z-index: -2;
         
         width: $left-bottom-hole;
         height: $left-bottom-hole;
@@ -72,6 +72,8 @@
         top: 0px;
         right: 0px;
         transform: translate($border-width, -10px);
+
+        z-index: -1;
 
         width: $right-top-hole;
         height: $right-top-hole;
