@@ -1,10 +1,10 @@
-@mixin four-corner-border($background, $border, $border-radius, $is-url: false, $x-hole: 60%, $y-hole: 60%, $x-position, $y-position, $width, $height) {
+@mixin four-corner-border($background, $border, $border-width: 1px, $border-radius, $padding: 5px, $x-hole: 60%, $y-hole: 60%) {
     position: relative;
 
     border: $border;
     border-radius: $border-radius;
 
-    padding: 5px;
+    padding: $padding;
 
     z-index: -3;
 
@@ -14,47 +14,38 @@
 
         z-index: -2;
 
-        @if $is-url {
-            background: $background no-repeat fixed;
-            background-size: 100vw 100vh;
-        } @else {
-            background-color: $background;
-        }
+        background: $background no-repeat fixed;
     }
 
     &::before{
         left: 50%;
-        top: calc(-1px - $border-size);
+        top: calc(-1px - $border-width);
         transform: translateX(-50%);
 
         z-index: -1;
 
-        background-position: calc($x-position + calc($width / 2) - 50%) $y-position;
-
         width: $y-hole;
-        height: calc(calc(100% + calc(2 * $border-size)) + 2px);
+        height: calc(calc(100% + calc(2 * $border-width)) + 2px);
 
     }
 
     &::after{
-        left: calc(-1px - $border-size);
+        left: calc(-1px - $border-width);
         top: 50%;
         transform: translateY(-50%);
 
-        background-position: $x-position calc($y-position + calc($height / 2) - 50%);
-
-        width: calc(calc(100% + calc(2 * $border-size)) + 2px);
+        width: calc(calc(100% + calc(2 * $border-width)) + 2px);
         height: $x-hole;
     }
 }
 
-@mixin two-corner-border($bg, $border, $borde-size: 1px, $is-url: false, $left-hole: 50%, $right-hole: 50%) {
+@mixin two-corner-border($background, $border, $border-width: 1px, $border-radius, $padding: 5px, $left-bottom-hole: 50%, $right-top-hole: 50%) {
     position: relative;
 
     border: $border;
-    border-width: $borde-size;
+    border-radius: $border-radius;
 
-    padding: 5px;
+    padding: $padding;
 
     z-index: -3;
 
@@ -62,35 +53,28 @@
         content: '';
         position: absolute;
 
-        //border: 1px solid wheat;
-
         z-index: -2;
 
-        @if $is-url {
-            background: $bg no-repeat fixed;
-            background-size: 100vw 100vh;
-            background-position: calc(0px - 0%) calc(0px - 0%);
-        } @else {
-            background-color: $bg;
-        }
+        background: $background no-repeat fixed;
+
     }
 
     &::before {
         bottom: 0px;
         left: 0px;
-        transform: translate(-50%, 50%);
+        transform: translate(-$border-width, $border-width);
         
-        width: $left-hole;
-        height: $left-hole;
+        width: $left-bottom-hole;
+        height: $left-bottom-hole;
     }
 
     &::after {
         top: 0px;
         right: 0px;
-        transform: translate(50%,-50%);
+        transform: translate($border-width, -10px);
 
-        width: $right-hole;
-        height: $right-hole;
+        width: $right-top-hole;
+        height: $right-top-hole;
     }
 }
 
@@ -99,10 +83,6 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
-
-.four-corner-border{
-
 }
 
 @keyframes uncompressing {

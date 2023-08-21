@@ -4,8 +4,13 @@ $uncompress-time: 0.9s;
 $uncompress-cooldown: 0s;
 
 .four-corner-border{
-    @include utils.four-corner-border(url("/fullbg.gif"), 1px solid white, 2px, true, 50%, 50%);
-    border-radius: 10px;
+    //$background, $border, $border-width, $border-radius, $padding: 5px, $x-hole: 60%, $y-hole: 60%
+    @include utils.four-corner-border(url("/fullbg.gif"), 1px solid white, 1px, 15px, 5px, 50%, 50%);
+    
+    &::before, &::after {
+        background-size: 100vw 100vh;
+        background-position: center;
+    }
 }
 
 .uncompressed, .compressed{
