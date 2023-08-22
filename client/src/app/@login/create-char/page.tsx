@@ -72,25 +72,23 @@ export default function CreateChar({
                     </label>
                 </div>
 
-                <div className={styles['header-inputs']}>
-                    <div>
-                        <input type="text" name="name" id="name"/>
-                        <label htmlFor="name">Name</label>
-                    </div>
-                    <div>
-                        <input type="text" name="title" id="title" value={"The weakest one"} readOnly/>
-                        <label htmlFor="title">Title</label>
-                    </div>
-                    
-                    <div>
-                        <input type="date" name="bornDate" id="bornDate" max={new Date().toISOString().slice(0,10)}/>
-                        <label htmlFor="bornDate">Born date</label>
-                    </div>
+                <div className={styles['minor-inputs']}>
+                    <label htmlFor="name">Name</label>
+                    <input type="text" name="name" id="name"/>
+                </div>
+                <div className={styles['minor-inputs']}>
+                    <label htmlFor="title">Title</label>
+                    <input type="text" name="title" id="title" value={"The weakest one"} readOnly/>
+                </div>
+                
+                <div className={styles['minor-inputs']}>
+                    <label htmlFor="bornDate">Born date</label>
+                    <input type="date" name="bornDate" id="bornDate" max={new Date().toISOString().slice(0,10)}/>
                 </div>
 
                 <div className={styles['synopsis-wrapper']}>
-                    <textarea name="synopsis" id="synopsis" cols={30} rows={10}></textarea>
                     <label htmlFor="synopsis">Synopsis</label>
+                    <textarea name="synopsis" id="synopsis" cols={30} rows={10}></textarea>
                 </div>
 
                 <button type="submit">Create</button>
