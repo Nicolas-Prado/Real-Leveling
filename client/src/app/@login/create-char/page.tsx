@@ -63,32 +63,32 @@ export default function CreateChar({
                         }
                     }
                 }}/>
-                <div className={styles['top-wrapper']}>
-                    <div className={styles['image-wrapper']}>
-                        <label htmlFor="image">
-                            {!imgSrc
-                                ? <span>+</span>
-                                : <img src={imgSrc} ref={imgElementRef} alt="Character image"/>
-                            }
-                        </label>
+                <div className={styles['image-wrapper']}>
+                    <label htmlFor="image">
+                        {!imgSrc
+                            ? <span>+</span>
+                            : <img src={imgSrc} ref={imgElementRef} alt="Character image"/>
+                        }
+                    </label>
+                </div>
+
+                <div className={styles['header-inputs']}>
+                    <div>
+                        <input type="text" name="name" id="name"/>
+                        <label htmlFor="name">Name</label>
                     </div>
-                    <div className={styles['top-inputs-wrapper']}>
-                        <div>
-                            <input type="text" name="name" id="name"/>
-                            <label htmlFor="name">Name</label>
-                        </div>
-                        <div>
-                            <input type="text" name="title" id="title" value={"The weakest one"} readOnly/>
-                            <label htmlFor="title">Title</label>
-                        </div>
-                        <div>
-                            <input type="date" name="bornDate" id="bornDate" max={new Date().toISOString().slice(0,10)}/>
-                            <label htmlFor="bornDate">Born date</label>
-                        </div>
+                    <div>
+                        <input type="text" name="title" id="title" value={"The weakest one"} readOnly/>
+                        <label htmlFor="title">Title</label>
+                    </div>
+                    
+                    <div>
+                        <input type="date" name="bornDate" id="bornDate" max={new Date().toISOString().slice(0,10)}/>
+                        <label htmlFor="bornDate">Born date</label>
                     </div>
                 </div>
 
-                <div>
+                <div className={styles['synopsis-wrapper']}>
                     <textarea name="synopsis" id="synopsis" cols={30} rows={10}></textarea>
                     <label htmlFor="synopsis">Synopsis</label>
                 </div>
