@@ -3,6 +3,7 @@
 import { useMutation } from "react-query"
 import { useRef, useState } from "react"
 import styles from "../../styles/createchar.module.scss"
+import { useRouter } from "next/navigation"
 
 export default function CreateChar({
     searchParams//userid
@@ -11,6 +12,8 @@ export default function CreateChar({
 }){
     const imgElementRef = useRef(null)
     const [ imgSrc, setImgSrc ] = useState<string|null>(null)
+
+    const router = useRouter()
 
     const characterMutation = useMutation({
         mutationFn: (newCharacter: FormData) => {
@@ -21,7 +24,8 @@ export default function CreateChar({
                     'Authorization': `Bearer ELPSYKONGROO` 
                 }
             }).then(res => res.json()).then((res) => {
-                console.log(res)
+                if(res.status === 'success')
+                    router.push('./')
             })
         }
     })
@@ -91,7 +95,9 @@ export default function CreateChar({
                     <textarea name="synopsis" id="synopsis" cols={30} rows={10}></textarea>
                 </div>
 
-                <button type="submit">Create</button>
+                <div className={styles['button-wrapper']}>
+                    <button type="submit">Create</button>
+                </div>
             </form>
         </div>
     )

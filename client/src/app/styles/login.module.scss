@@ -16,7 +16,7 @@ $uncompress-cooldown: 0s;
 .uncompressed, .compressed{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 
     padding: 25px 20px 25px 20px;

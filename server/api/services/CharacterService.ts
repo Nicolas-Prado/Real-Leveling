@@ -22,7 +22,7 @@ export function createCharacter(characterJSON: {name: string, bornDate: string, 
 }
 
 export async function improvedCreateCharacter(req:Request, res:Response){
-    return new Promise<{ character: {},  title: {}, history: {} } | {error:{type:string, field:any[], message:string|any[]}}>(async (resolve, reject) => {
+    return new Promise<{ status: string, object: { character: {},  title: {}, history: {} } } | {error:{type:string, field:any[], message:string|any[]}}>(async (resolve, reject) => {
         upload.single('image')(req, res, async function (err) {
             if (err)
                 resolve ({
@@ -54,7 +54,7 @@ export async function improvedCreateCharacter(req:Request, res:Response){
                     synopsis: body.synopsis
                 })
         
-                resolve({ character: newCharacter,  title: newTitle, history: newHistoryHdr })
+                resolve({ status: "success", object: { character: newCharacter,  title: newTitle, history: newHistoryHdr } })
             } catch (err:any) {
                 resolve(generateErrorJSON(err))
             }
